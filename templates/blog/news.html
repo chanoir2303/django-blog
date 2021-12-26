@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CHANOIR News</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/style.css' %}">
+</head>
+<body>
+<header>
+    <div id="header-title">
+        <h2>News</h2>
+    </div>
+</header>
+<section id="main-section">
+    <section id="left-section">
+        <div id="search-bar">
+            <span class="material-icons-outlined icon-input-search">search</span><label for="input-search-bar"></label>
+            <input type="text" id="input-search-bar" placeholder="Search">
+        </div>
+        <div id="category">
+            <div id="blog-category">
+                <h6>Blog</h6>
+                <a href="{% url 'blog:news' %}" class="blog-category-item"><span class="material-icons-outlined light-icon-category-item">newspaper</span>&nbsp;&nbsp;News</a>
+                <a href="{% url 'blog:tutorials' %}" class="blog-category-item"><span class="material-icons-outlined light-icon-category-item">library_books</span>&nbsp;&nbsp;Tutorials</a>
+                <a href="{% url 'blog:archives' %}" class="blog-category-item"><span class="material-icons-outlined light-icon-category-item">move_to_inbox</span>&nbsp;&nbsp;Archives</a>
+            </div>
+            <div id="library-category">
+                <h6>Library</h6>
+                <a href="https://github.com/chanoir2303" class="library-category-item"><span class="material-icons-outlined light-icon-category-item">code</span>&nbsp;&nbsp;Github</a>
+                <a href="#" class="library-category-item"><span class="material-icons-outlined light-icon-category-item">collections_bookmark</span>&nbsp;&nbsp;Portfolio</a>
+                <a href="#" class="library-category-item"><span class="material-icons-outlined light-icon-category-item">photo_camera</span>&nbsp;&nbsp;Photographs</a>
+            </div>
+            <div id="production-category">
+                <h6>Production</h6>
+                <a href="#" class="production-category-item"><span class="material-icons-outlined dark-icon-category-item">link</span>&nbsp;&nbsp;Pickapass</a>
+                <a href="#" class="production-category-item"><span class="material-icons-outlined dark-icon-category-item">link</span>&nbsp;&nbsp;QR loyalty</a>
+            </div>
+        </div>
+    </section>
+     <section id="right-section">
+        <div id="article-list">
+            {% for latest_article in latest_article_list %}
+            <div class="article-item">
+                <span class="article-item-title">{{ latest_article.title }}</span>
+                <div class="article-item-previewed-text">{{ latest_article.previewed_text }}</div>
+                {% if latest_article.file %}
+                <div class="article-item-form">
+                    <form action="{{latest_article.file.url}}">
+                        <button type="submit" class="article-item-button-more">Read more</button>
+                    </form>
+                </div>
+                {% else %}
+                <div class="article-item-form">
+                    <form action="">
+                        <button type="submit" class="article-item-button-more">Soon</button>
+                    </form>
+                </div>
+                {% endif %}
+                <div class="article-item-infos">
+                    <span class="article-item-date">{{ latest_article.pub_date }}</span>
+                    <div>
+                        <span class="material-icons-outlined icon-article-item-vote">visibility</span>
+                        <span class="article-item-vote-counter">{{ latest_article.vote }}</span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+        <form action="{% url 'blog:archives' %}" id="view-all-form">
+            <button type="submit" id="view-all-button">View all articles</button>
+        </form>
+    </section>
+</section>
+</body>
+<footer></footer>
+</html>
